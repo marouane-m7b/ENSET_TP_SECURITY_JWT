@@ -48,6 +48,8 @@ Both `pass` and `password` are accepted on registration and login. A successful 
 }
 ```
 
+![Successful login returning a JWT](docs/images/login-success.png)
+
 Missing or blank credentials return **400 Bad Request**. Incorrect credentials or an unknown account return **401 Unauthorized**.
 
 The H2 database is in memory: restarting the application removes registered accounts. Register again after a restart, then log in with the same credentials.
@@ -61,7 +63,22 @@ GET http://localhost:8082/api/profile
 Authorization: Bearer <JWT>
 ```
 
-`GET /api/hello` also requires a token. Tokens expire after one hour.
+The profile endpoint returns the authenticated user's email:
+
+![Authenticated profile response](docs/images/profile-authorized.png)
+
+You can also call the hello endpoint with the same token:
+
+```http
+GET http://localhost:8082/api/hello
+Authorization: Bearer <JWT>
+```
+
+Returns **200 OK** with `hello`.
+
+![Successful authenticated hello request](docs/images/hello-authorized.png)
+
+Both endpoints require a token. Tokens expire after one hour.
 
 ## Tests
 
@@ -69,4 +86,17 @@ Authorization: Bearer <JWT>
 ./mvnw test
 ```
 
+## Inspect the database
+
 The H2 console is available at `http://localhost:8082/h2-console`, using JDBC URL `jdbc:h2:mem:securitydb`, username `sa`, and an empty password. The bundled configuration and signing secret are for local practice.
+
+
+Run this query to inspect registered accounts:
+
+```sql
+SELECT * FROM USERS;
+```
+
+Passwords are stored as BCrypt hashes, and newly registered accounts receive the `USER` role.
+
+![Registered user with a BCrypt password hash in H2](docs/images/h2-users.png)
