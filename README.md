@@ -217,3 +217,63 @@ Les tests d’intégration ajoutés dans `AuthIntegrationTests` couvrent ces pri
 - **La configuration est destinée au TP local** : la console H2 est accessible et le secret JWT est défini dans `application.properties`.
 
 Les résultats illustrent le parcours complet : **inscription → connexion → obtention du JWT → accès aux ressources protégées**, avec vérification du stockage du compte dans H2.
+
+## 10. Création et lancement du frontend React
+
+Le frontend a été créé dans le dossier `jwt-react` à la racine du projet avec le modèle React de Vite.
+
+### 10.1. Commandes de création
+
+Commandes exécutées dans PowerShell :
+
+```powershell
+cd C:\Users\marou\Desktop\ENSET\Security\ENSET_TP_SECURITY_JWT
+node --version
+npm --version
+npm create vite@latest jwt-react -- --template react
+```
+
+Lors de la création, les options **ESLint** et **Install with npm and start now: Yes** ont été sélectionnées. Cette dernière option installe les dépendances et lance automatiquement le serveur de développement.
+
+### 10.2. Résultats observés
+
+La capture du terminal confirme les résultats suivants :
+
+| Élément | Résultat observé |
+| --- | --- |
+| Node.js | `v24.20.0` |
+| npm | `11.19.0` |
+| create-vite | `9.3.1` |
+| Installation | 143 paquets ajoutés, 144 paquets audités |
+| Audit npm à l’installation | 0 vulnérabilité signalée |
+| Serveur Vite | `8.3.5`, prêt en 369 ms |
+| Adresse locale | `http://localhost:5173/` |
+
+![Création du projet React et démarrage du serveur Vite dans PowerShell](docs/images/react-vite-installation.png)
+
+L’ouverture de **http://localhost:5173/** affiche la page de démarrage React/Vite, avec le titre **Get started** et le compteur **Count is 0**. Ce résultat confirme le démarrage du frontend. Les formulaires d’inscription et de connexion et l’intégration avec l’API JWT restent à réaliser.
+
+![Page de démarrage React et Vite affichée dans le navigateur](docs/images/react-vite-browser.png)
+
+### 10.3. Relancer le frontend
+
+Pour les lancements suivants, ouvrir un terminal et exécuter :
+
+```powershell
+cd C:\Users\marou\Desktop\ENSET\Security\ENSET_TP_SECURITY_JWT\jwt-react
+npm run dev
+```
+
+Garder le terminal ouvert pendant l’utilisation du frontend et utiliser l’URL affichée par Vite.
+
+### 10.4. Installation des dépendances frontend
+
+Axios et React Router ont été installés dans `jwt-react` :
+
+```powershell
+cd C:\Users\marou\Desktop\ENSET\Security\ENSET_TP_SECURITY_JWT\jwt-react
+npm install axios react-router-dom
+npm run build
+```
+
+Résultat vérifié : **axios 1.20.0** et **react-router-dom 7.18.4** sont présents dans les dépendances du frontend. npm indique 29 paquets ajoutés, 173 paquets audités et 0 vulnérabilité signalée lors de cette installation. La compilation `npm run build` réussit. Les pages et la connexion avec le backend restent à réaliser.
